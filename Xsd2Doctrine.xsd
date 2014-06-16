@@ -16,10 +16,9 @@
       Creating <xsl:value-of select="$entityName" />  <!-- Creating  -->
       <xsl:result-document href="output/{$entityName}.xml" format="xml">
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/xmlschema-instance" xsi:schemalocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-          <xsl:apply-templates />
           <entity>
             <xsl:attribute name="name">
-              <xsl:value-of select="@entityName" />
+              <xsl:value-of select="concat($namespace, '\', $entityName)" />
             </xsl:attribute>
           </entity>
         </doctrine-mapping>
