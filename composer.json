@@ -1,7 +1,7 @@
 {
   "name":"wesharemusic/xsd2doctrine",
   "type":"library",
-  "description":"XSLT templates, helping to convert XSD file to Doctrine2 schema"
+  "description":"XSLT templates, helping to convert XSD file to Doctrine2 schema",
   "authors":[
     {
       "name":"Baptiste Naudinat"
@@ -10,7 +10,7 @@
   "license":"MIT",
   "require": {
     "php":">=5.3.2",
-    "saxon-he":"~9.5",
+    "doctrine/dbal": "2.3.4",
     "doctrine/common": "~2.2"
   }
 }
