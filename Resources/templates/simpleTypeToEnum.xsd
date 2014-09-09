@@ -15,15 +15,15 @@
   </xsl:template>
 
   <xsl:template match="//xs:simpleType">
-    <xsl:variable name="entityName" select="@name" />
-    Creating <xsl:value-of select="$entityName" />  <!-- Creating  -->
-    <xsl:result-document href="output/types/{$entityName}Type.php" method="text">
+    <xsl:variable name="enumName" select="@name" />
+    Creating <xsl:value-of select="$enumName" />  <!-- Creating  -->
+    <xsl:result-document href="output/types/{$enumName}Type.php" method="text">
 (?
-namespace MyProject\DBAL;
+namespace <xsl:value-of select="namespace" />;
 
-class <xsl:value-of select="$entityName"/>Type extends EnumType
+class <xsl:value-of select="$enumName"/>Type extends EnumType
 {
-protected $name = '<xsl:value-of select="$entityName"/>';
+protected $name = '<xsl:value-of select="$enumName"/>';
   protected $values = [<xsl:for-each select="./xs:restriction/xs:enumeration">
     "<xsl:value-of select="./@value"/>" => "<xsl:value-of select="./xs:annotation/xs:documentation"/>"<xsl:if test="position() != last()"><xsl:text>,</xsl:text></xsl:if></xsl:for-each>
   ];
