@@ -16,5 +16,4 @@ saxon -s:xml_samples/release-notification.xsd -xsl:Resources/templates/complexTy
 
 - To generate ern:complexType extending avs:simpleType
 
-
-axon -s:xml_samples/release-notification.xsd -xsl:Resources/templates/complexTypeExtendToEntity.xsl namespace="WeShareMusic\ERNBundle\Entity" output=/home/bapt/www/WeShareMusic/DDMF/src/WeShareMusic/ERNBundle/Entity
+saxon -s:xml_samples/release-notification.xsd -xsl:Resources/templates/complexTypeExtendToEntity.xsl namespace="WeShareMusic\ERNBundle\Entity\AvsExtension" output=/home/bapt/www/WeShareMusic/DDMF/src/WeShareMusic/ERNBundle/Entity/AvsExtension
