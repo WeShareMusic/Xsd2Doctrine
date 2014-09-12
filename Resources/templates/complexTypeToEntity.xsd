@@ -14,7 +14,7 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="//xs:complexType[@name]">
+  <xsl:template match="//xs:complexType[@name and not(xs:simpleContent)]">
     <xsl:variable name="entityName" select="@name" />
     Creating <xsl:value-of select="$entityName" />  <!-- Creating  -->
     <xsl:result-document href="output/entities/{$entityName}.php" method="text">
@@ -28,9 +28,10 @@ class <xsl:value-of select="$entityName"/>
   </xsl:template>
 
   <xsl:template match="//xs:documentation">
-  /**
-   * <xsl:value-of select="." />
-   */</xsl:template>
+  <!-- /** -->
+  <!--  * <xsl:value-of select="." /> -->
+  <!--  */ -->
+   </xsl:template>
 
   <xsl:template match="//xs:element[@type='xs:boolean']">
   /**
@@ -75,11 +76,27 @@ class <xsl:value-of select="$entityName"/>
   protected $<xsl:value-of  select="./@name" />;
   </xsl:template>
 
-  <!-- <xsl:template match="//xs:element[starts-with(@type, 'ern:')]"> -->
-  <!--   <xsl:variable name="target" select="substring-after(./@type, ern:')" /> -->
-  <!-- /** -->
-  <!--  * @ORM\Column(type="<xsl:value-of select="$target" />") -->
-  <!--  */ -->
-  <!-- protected $<xsl:value-of  select="./@name" />; -->
-  <!-- </xsl:template> -->
+  <xsl:template match="//xs:element[starts-with(@type, 'ern:') and not(@maxOccurs) and not(@minOccurs)]">
+    <xsl:variable name="target" select="substring-after(./@type, 'ern:')" />
+    /**
+     * @ManyToOne(targetEntity="<xsl:value-of select="./@name" />", inversedBy="<xsl:value-of select="./ancestor::xs:complexType[1]/@name" />s")
+     **/
+  protected $<xsl:value-of  select="./@name" />;
+  </xsl:template>
+
+  <xsl:template match="//xs:element[starts-with(@type, 'ern:') and not(@maxOccurs) and @minOccurs=0]">
+    <xsl:variable name="target" select="substring-after(./@type, 'ern:')" />
+    /**
+     * @ManyToOne(targetEntity="<xsl:value-of select="./@name" />", inversedBy="<xsl:value-of select="./ancestor::xs:complexType[1]/@name" />s", nullable=true)
+     **/
+  protected $<xsl:value-of  select="./@name" />;
+  </xsl:template>
+
+  <xsl:template match="//xs:element[starts-with(@type, 'ern:') and @maxOccurs='unbounded']">
+    <xsl:variable name="target" select="substring-after(./@type, 'ern:')" />
+    /**
+     * @ManyToMany(targetEntity="<xsl:value-of select="./@name" />")
+     **/
+  protected $<xsl:value-of  select="./@name" />;
+  </xsl:template>
 </xsl:stylesheet>
