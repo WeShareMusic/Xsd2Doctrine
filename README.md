@@ -12,3 +12,9 @@ saxon -s:xml_samples/avs.xsd -xsl:Resources/templates/simpleTypeToEnum.xsd names
 - To generate entities from release-notification.xsd
 
 saxon -s:xml_samples/release-notification.xsd -xsl:Resources/templates/complexTypeToEntity.xsd namespace=WeShareMusic\DDEXBundle\Entity
+
+
+- To generate ern:complexType extending avs:simpleType
+
+
+axon -s:xml_samples/release-notification.xsd -xsl:Resources/templates/complexTypeExtendToEntity.xsl namespace="WeShareMusic\ERNBundle\Entity" output=/home/bapt/www/WeShareMusic/DDMF/src/WeShareMusic/ERNBundle/Entity
